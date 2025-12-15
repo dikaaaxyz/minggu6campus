@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minggu Ke-6 : Tampilan Website kampus dengan Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<style>
+    :root {
+        --primary-color: #0d6efd;
+        --secondary-color: #6c757d;
+        --accent-color: #ffc107;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        scroll-behavior: smooth;
+        padding-top: 76px;
+    }
+    .navbar-brand {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                    url('https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/4d55f234ae7c340f01a2cbd4d9b361f4d20daf10/Tanpa%20judul%20(1600%20x%20900%20piksel).png');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 150px 0;
+        text-align: center;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+        
+    .section-title {
+        position: relative;
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        text-align: center;
+    }
+        
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--primary-color);
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: slideUp 0.8s ease-out;
+    }
+        
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        animation: zoomIn 0.8s ease-out;
+    }
+        
+    .gallery-item:hover {
+        transform: scale(1.03);
+    }
+        
+    .gallery-item img {
+        transition: transform 0.5s ease;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+        
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+        
+    .table-hover tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+        
+    footer {
+        background-color: #212529;
+        color: white;
+    }
+        
+    .social-icons a {
+        display: inline-block;
+        margin-right: 15px;
+        font-size: 1.5rem;
+        color: white;
+        transition: color 0.3s ease;
+    }
+        
+    .social-icons a:hover {
+        color: var(--accent-color);
+    }
+        
+    .program-card {
+        border-left: 4px solid var(--primary-color);
+    }
+        
+    .stats-section {
+        background-color: var(--primary-color);
+        color: white;
+    }
+        
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+        animation: pulse 2s infinite;
+    }
+        
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+        
+    @keyframes slideUp {
+        from { 
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+        
+    @keyframes zoomIn {
+        from { 
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to { 
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+        
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    .animate-on-scroll {
+            animation: slideUp 1s ease-out;
+    }
+        
+    .nav-link {
+        position: relative;
+        transition: color 0.3s ease;
+    }
+        
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+    }
+        
+    .nav-link:hover::after {
+        width: 100%;
+    }
+        
+    .btn-primary {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+        
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+    }
+
+    .nav-item.dropdown {
+        position: relative;
+    }
+
+    .departments-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: max-content;  
+        min-width: 300px;    
+        background-color: #343a40;
+        z-index: 1000;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .departments-dropdown.show {
+        display: block;
+    }
+    
+    .department-item {
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        display: block;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+    }
+    
+    .department-item:hover {
+        background-color: rgba(255,255,255,0.1);
+        border-left-color: var(--accent-color);
+        padding-left: 30px;
+    }
+    
+    .nav-item.dropdown:hover .departments-dropdown {
+        display: block;
+    }
+    
+    .department-icon {
+        margin-right: 10px;
+        font-size: 1.2rem;
+    }
+
+    .department-section {
+        padding: 80px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .department-header {
+        margin-bottom: 3rem;
+    }
+
+    .department-gallery {
+        margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 100px 0;
+        }
+            
+        .hero-section h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="bi bi-mortarboard-fill me-2"></i>ITID
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Beranda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">Tentang</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Program Studi
+                            </a>
+                            <div class="departments-dropdown">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="#mesin" class="department-item">
+                                                <i class="bi bi-gear-fill department-icon"></i>
+                                                Departemen Teknik Mesin dan Mekanika
+                                            </a>
+                                            <a href="#energi" class="department-item">
+                                                <i class="bi bi-lightning-charge-fill department-icon"></i>
+                                                Departemen Energi
+                                            </a>
+                                            <a href="#elektro" class="department-item">
+                                                <i class="bi bi-cpu-fill department-icon"></i>
+                                                Departemen Teknik Elektro dan Informatika
+                                            </a>
+                                            <a href="#penerbangan" class="department-item">
+                                                <i class="bi bi-airplane-fill department-icon"></i>
+                                                Departemen Teknik Penerbangan Industri
+                                            </a>
+                                            <a href="#pasca" class="department-item">
+                                                <i class="bi bi-mortarboard-fill department-icon"></i>
+                                                Program Pascasarjana
+                                            </a>
+                                            <a href="#internasional" class="department-item">
+                                                <i class="bi bi-globe department-icon"></i>
+                                                Kerjasama Program Internasional
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#gallery">Galeri Umum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Kontak</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">Institut Teknologi Inovasi Dirgantara</h1>
+            <p class="lead mb-4">Perguruan Tinggi yang Mencetak Inovasi di Bidang Teknologi Kedirgantaraan</p>
+            <a href="#about" class="btn btn-primary btn-lg">Jelajahi Kampus ITID</a>
+        </div>
+    </section>
+
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Tentang Kampus</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1268&q=80" 
+                         alt="Kampus ITID" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-3">Visi dan Misi</h3>
+                    <p class="mb-4">Institut Teknologi Inovasi Dirgantara (ITID) merupakan perguruan tinggi yang berfokus pada pengembangan ilmu pengetahuan dan teknologi kedirgantaraan untuk mempersiapkan generasi masa depan.</p>
+                    
+                    <div class="accordion" id="aboutAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    Visi
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#aboutAccordion">
+                                <div class="accordion-body">
+                                    Menjadi institut teknologi dirgantara unggulan di tingkat nasional dan internasional yang menghasilkan lulusan berdaya saing global.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Misi
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#aboutAccordion">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li>Menyelenggarakan pendidikan tinggi berbasis teknologi kedirgantaraan yang berkualitas</li>
+                                        <li>Melaksanakan penelitian inovatif untuk pengembangan ilmu pengetahuan dan teknologi dirgantara</li>
+                                        <li>Menerapkan hasil penelitian untuk kesejahteraan masyarakat dan kemajuan industri dirgantara</li>
+                                        <li>Membangun kerjasama dengan berbagai institusi dalam dan luar negeri di bidang dirgantara</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">7.000+</div>
+                        <div class="stat-label">Mahasiswa</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">250+</div>
+                        <div class="stat-label">Dosen</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">17</div>
+                        <div class="stat-label">Program Sarjana</div>
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Program Sarjana Terapan</div>
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Program Pascasarjana</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Tahun Pengalaman</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departemen Teknik Mesin dan Mekanika -->
+    <section id="mesin" class="department-section py-5 bg-light">
+        <div class="container">
+            <div class="department-header text-center">
+                <i class="bi bi-gear-fill display-1 text-primary mb-3"></i>
+                <h2 class="section-title">Departemen Teknik Mesin dan Mekanika</h2>
+                <p class="lead">Mengembangkan teknologi mesin dan sistem mekanik untuk industri dirgantara</p>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h4>Program Studi</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Program Studi</th>
+                                    <th>Jenjang</th>
+                                    <th>Akreditasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Teknik Dirgantara</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Mesin</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Material</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Produksi dan Manufaktur</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Otomasi Mesin dan Sistem Kontrol</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Mekatronika</td>
+                                    <td>S.Tr. (D4)</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Fasilitas</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">Laboratorium Mekanika Fluida</li>
+                        <li class="list-group-item">Laboratorium Material</li>
+                        <li class="list-group-item">Laboratorium CAD/CAM</li>
+                        <li class="list-group-item">Workshop Prototipe</li>
+                        <li class="list-group-item">Simulator Sistem Mekanik</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="department-gallery">
+                <h4 class="text-center mb-4">Galeri Departemen</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/8a358655b3785ddd51f2fe22471277ef5286bd4e/PIA25959.jpg" 
+                                 class="img-fluid" alt="Laboratorium Mesin">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/c9fe3e290b8d75077faeb0e9fbc90a60c5e18577/CAD.png" 
+                                 class="img-fluid" alt="CAD Laboratory">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/e024ccc9027fdd4d84991c678375823d05575dd2/istockphoto-1401132682-612x612.jpg" 
+                                 class="img-fluid" alt="Praktikum">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departemen Energi -->
+    <section id="energi" class="department-section py-5">
+        <div class="container">
+            <div class="department-header text-center">
+                <i class="bi bi-lightning-charge-fill display-1 text-warning mb-3"></i>
+                <h2 class="section-title">Departemen Energi</h2>
+                <p class="lead">Mengembangkan teknologi energi terbarukan dan efisiensi energi untuk aplikasi dirgantara</p>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h4>Program Studi</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Program Studi</th>
+                                    <th>Jenjang</th>
+                                    <th>Akreditasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Teknik Energi Terbarukan</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Konversi Energi</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Manajemen Energi</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Fasilitas</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">Laboratorium Energi Terbarukan</li>
+                        <li class="list-group-item">Laboratorium Sistem Propulsi</li>
+                        <li class="list-group-item">Laboratorium Efisiensi Energi</li>
+                        <li class="list-group-item">Pusat Inovasi Energi</li>
+                        <li class="list-group-item">Simulator Sistem Energi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="department-gallery">
+                <h4 class="text-center mb-4">Galeri Departemen</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/0cee1bc51041d628b2fa62e9456188c1aa32477c/LAB_EBT-min.CD00A8sI_Z10aKFk.webp" 
+                                 class="img-fluid" alt="Laboratorium Energi">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/7adcc9bdc547b3ba74d8dfa00b279c44e9717d15/1-Kontraktor-Solar-Panel-Pengertian-Tanggung-Jawab-dan-Manfaatnya-_Spectrue-2.jpg" 
+                                 class="img-fluid" alt="Panel Surya">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/639017757068fc5297aec5a064aa050473f4e5af/monopropellant-propulsion-medium-sc.jpg" 
+                                 class="img-fluid" alt="Sistem Propulsi">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departemen Teknik Elektro dan Informatika -->
+    <section id="elektro" class="department-section py-5 bg-light">
+        <div class="container">
+            <div class="department-header text-center">
+                <i class="bi bi-cpu-fill display-1 text-success mb-3"></i>
+                <h2 class="section-title">Departemen Teknik Elektro dan Informatika</h2>
+                <p class="lead">Spesialisasi dalam sistem avionik, kontrol, dan elektronika pesawat</p>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h4>Program Studi</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Program Studi</th>
+                                    <th>Jenjang</th>
+                                    <th>Akreditasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Teknik Elektro Avionik</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Kendali</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Informatika</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Telekomunikasi</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Komputer</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Sistem Informasi Pesawat</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Fasilitas</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">Laboratorium Avionik</li>
+                        <li class="list-group-item">Laboratorium Sistem Kendali</li>
+                        <li class="list-group-item">Laboratorium Telekomunikasi</li>
+                        <li class="list-group-item">Simulator Penerbangan</li>
+                        <li class="list-group-item">Laboratorium Embedded System</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="department-gallery">
+                <h4 class="text-center mb-4">Galeri Departemen</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/88119c28aa62ee04db9b3cdda0491b907c082582/istockphoto-867367384-1024x1024.jpg" 
+                                 class="img-fluid" alt="Laboratorium Elektro">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/75f399f7ad0249576f99d6d892231ce4b791b0a3/1635121984.jpg" 
+                                 class="img-fluid" alt="Sistem Avionik">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/main/pngtree-scientist-analyzing-data-on-large-screen-in-lab-background-picture-image_16333564.jpg" 
+                                 class="img-fluid" alt="Laboratorium Informatika">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departemen Teknik Penerbangan Industri -->
+    <section id="penerbangan" class="department-section py-5">
+        <div class="container">
+            <div class="department-header text-center">
+                <i class="bi bi-airplane-fill display-1 text-info mb-3"></i>
+                <h2 class="section-title">Departemen Teknik Penerbangan Industri</h2>
+                <p class="lead">Mempelajari desain, produksi, dan operasi pesawat terbang serta sistem pendukungnya</p>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h4>Program Studi</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Program Studi</th>
+                                    <th>Jenjang</th>
+                                    <th>Akreditasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Teknik Penerbangan</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Manajemen Industri Dirgantara</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-success">A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Teknik Pemeliharaan Pesawat</td>
+                                    <td>S1</td>
+                                    <td><span class="badge bg-warning">B</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Fasilitas</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">Laboratorium Aerodinamika</li>
+                        <li class="list-group-item">Laboratorium Struktur Pesawat</li>
+                        <li class="list-group-item">Hanggar Pesawat</li>
+                        <li class="list-group-item">Workshop Perawatan Pesawat</li>
+                        <li class="list-group-item">Simulator Penerbangan Lengkap</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="department-gallery">
+                <h4 class="text-center mb-4">Galeri Departemen</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/82c1ec69fc98f69fe312b4796a28f10f627a0a28/importance-preventative-aviation-maintenance.webp" 
+                                 class="img-fluid" alt="Plane repair">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/e5e52bf7bb0f51dc50e616a5e971821309654e1b/apsl.jpg" 
+                                 class="img-fluid" alt="Laboratorium Aerodinamika">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/main/80555687_3d0c0000_5db9_46e1_94a0_51c4d19dfbf7_1969_1313.jpg" 
+                                 class="img-fluid" alt="Simulator Penerbangan">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pasca" class="department-section py-5">
+        <div class="container">
+            <div class="department-header text-center">
+                <i class="bi bi-mortarboard-fill display-1 text-info mb-3"></i>
+                <h2 class="section-title">Program Pascasarjana</h2>
+                <p class="lead mb-4">Studi lanjut untuk membentuk peneliti dan profesional unggul di bidang teknologi kedirgantaraan.</p>
+                <p class="lead">Program Pascasarjana dirancang untuk mencetak lulusan yang unggul dalam penelitian, pengembangan ilmu pengetahuan, serta penerapan teknologi kedirgantaraan. Dengan dukungan dosen berpengalaman, fasilitas modern, serta jaringan kerjasama nasional maupun internasional, program ini mempersiapkan mahasiswa menjadi peneliti, praktisi, dan pemimpin di bidang industri maupun akademik.</p>
+            </div>
+            <div class="mb-5">
+                <h4 class="mb-3">Program Pascasarjana</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-success">
+                            <tr>
+                                <th>Program</th>
+                                <th>Jenjang</th>
+                                <th>Konsentrasi</th>
+                                <th>Durasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">Magister Teknik Dirgantara</td>
+                                <td rowspan="2">S2</td>
+                                <td>Struktur Pesawat</td>
+                                <td>4 Semester</td>
+                            </tr>
+                            <tr>
+                                <td>Propulsi</td>
+                                <td>4 Semester</td>
+                            </tr>
+                            <tr>
+                                <td>Magister Manajemen Industri Dirgantara</td>
+                                <td>S2</td>
+                                <td>Manajemen Rantai Pasok</td>
+                                <td>4 Semester</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="department-gallery">
+                <h4 class="text-center mb-4">Galeri Pascasarjana</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/b00276c22e7334eaffaab5ad448a3ceaf446d2f4/pngtree-office-building-on-blue-sky-construction-technology-germany-photo-image_16825886.jpg" 
+                                 class="img-fluid" alt="Gedung Pascasarjana">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/8083f4344944de2b527c8218f3d7aba08be64f5f/dikecam-karena-pakai-mesin-roket-rusia-ini-dalih-pentagon-EMg-thumb.jpg" 
+                                 class="img-fluid" alt="Penelitian Roket">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gallery-item">
+                            <img src="https://raw.githubusercontent.com/dikaaaxyz/dikagantengaamiin/682df161fd4a91d78b99521d1493a9ce803af096/00f2069f-057a-4bd2-8e43-e35c292798ed_169.jpeg" 
+                                 class="img-fluid" alt="Mesin Roket">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="internasional" class="department-section py-5">
+        <div class="container">
+            <div class="department-header text-center">
+                <i class="bi bi-mortarboard-fill display-1 text-info mb-3"></i>
+                <h2 class="section-title">Program Internasional</h2>
+                <p class="lead mb-4">Kerjasama dengan universitas dan institusi luar negeri melalui pertukaran, riset bersama, dan program studi internasional.</p>
+                <p class="lead">Program ini membuka peluang bagi mahasiswa, dosen, dan peneliti untuk terlibat dalam berbagai kegiatan akademik dan riset di tingkat global. Melalui kemitraan dengan universitas dan institusi internasional, program ini mencakup pertukaran mahasiswa, studi lanjut, joint research, hingga penyelenggaraan seminar dan konferensi bersama. Tujuannya adalah memperluas wawasan internasional, meningkatkan kompetensi global, serta memperkuat jejaring kerjasama dalam bidang teknologi kedirgantaraan dan pendidikan tinggi.</p>
+            </div>
+            <div>
+                <h4 class="mb-3">Program Internasional</h4>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr class="table-info">
+                                <th>Program</th>
+                                <th>Partner University</th>
+                                <th>Negara</th>
+                                <th>Durasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Double Degree - Aerospace Engineering</td>
+                                <td>University of Stuttgart</td>
+                                <td>Jerman</td>
+                                <td>4 Tahun</td>
+                            </tr>
+                            <tr>
+                                <td>Student Exchange</td>
+                                <td>Embry-Riddle Aeronautical University</td>
+                                <td>Amerika Serikat</td>
+                                <td>1 Semester</td>
+                            </tr>
+                            <tr>
+                                <td>Joint Research Program</td>
+                                <td>Toulouse Institute of Technology</td>
+                                <td>Prancis</td>
+                                <td>2 Tahun</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    <!-- Galeri Umum Kampus -->
+    <section id="gallery" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Galeri Umum Kampus</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1268&q=80" 
+                             class="img-fluid" alt="Gedung Kampus">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+                             class="img-fluid" alt="Perpustakaan">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+                             class="img-fluid" alt="Laboratorium">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+                             class="img-fluid" alt="Aula">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+                             class="img-fluid" alt="Kegiatan Mahasiswa">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+                             class="img-fluid" alt="Ruang Kelas">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-3">Institut Teknologi Inovasi Dirgantara</h4>
+                    <p>Jl. Dirgantara No. 123, Bandung</p>
+                    <p>Jawa Barat 40132</p>
+                    <p><i class="bi bi-telephone me-2"></i>+62 22 1234 5678</p>
+                    <p><i class="bi bi-envelope me-2"></i>info@itid.ac.id</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-3">Departemen</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#mesin" class="text-white text-decoration-none">Teknik Mesin dan Mekanika</a></li>
+                        <li><a href="#energi" class="text-white text-decoration-none">Energi</a></li>
+                        <li><a href="#elektro" class="text-white text-decoration-none">Teknik Elektro dan Informatika</a></li>
+                        <li><a href="#penerbangan" class="text-white text-decoration-none">Teknik Penerbangan Industri</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-3">Ikuti Kami</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2023 Institut Teknologi Inovasi Dirgantara. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        
+        function adjustBodyPadding() {
+            const navbar = document.querySelector('.navbar');
+            document.body.style.paddingTop = navbar.offsetHeight + 'px';
+        }
+
+        document.addEventListener('DOMContentLoaded', adjustBodyPadding);
+        window.addEventListener('resize', adjustBodyPadding);
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const programStudiLink = document.querySelector('.nav-item.dropdown .nav-link');
+            const departmentsDropdown = document.querySelector('.departments-dropdown');
+            
+            programStudiLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                departmentsDropdown.classList.toggle('show');
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    departmentsDropdown.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
